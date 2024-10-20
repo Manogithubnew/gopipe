@@ -7,7 +7,7 @@ pipeline {
    }
    environment {
        DOCKERHUB_CREDENTIALS = credentials('doocker-hub-credential')
-       DOCKER_IMAGE = 'ephraimaudu/test-app'
+       DOCKER_IMAGE = 'mrthcldock/tektondemo'
        GITHUB_CREDENTIALS = 'github'
        SONAR_TOKEN = credentials('sonartoken')
        SNAP_REPO = 'vprofile-snapshot'
