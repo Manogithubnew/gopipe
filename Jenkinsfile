@@ -54,7 +54,7 @@ pipeline {
            steps{
                script{
                     echo "starting docker build"
-                    sh "docker build build -t ${DOCKER_IMAGE}:${env.BUILD_ID} ."
+                    sh "docker build -t ${DOCKER_IMAGE}:${env.BUILD_ID} ."
                     echo "docker built successfully"
                }
            }
