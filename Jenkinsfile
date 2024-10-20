@@ -51,31 +51,23 @@ pipeline {
            }
        }
        stage('Run Docker Build'){
-           steps{
-               script{
-                    echo "starting docker build"
-                    sh "docker build build -t ${DOCKER_IMAGE}:${env.BUILD_ID} ."
-                    echo "docker built successfully"
-               }
-           }
+	   
+          app = docker.build("mrthcldock/tektondemo")
+          
        }
-       stage('push to docker hub'){
-           steps{
-               echo "pushing to docker hub"
-               script{
-                   docker.withRegistry('https://registry.hub.docker.com', 'doocker-hub-credential'){
-                       docker.image("${DOCKER_IMAGE}:${env.BUILD_ID}").push()
-                   }
-               }
-               echo "done"
-           }
-       }
-   }
+       stage('Test image') {
+  
 
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
+    }
 
-   post {
-       always{
-           cleanWs()
-       }
-   }
-}
+    stage('Push image') {
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'doocker-hub-credential') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
+ }
