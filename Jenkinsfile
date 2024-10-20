@@ -9,7 +9,7 @@ pipeline {
        DOCKERHUB_CREDENTIALS = credentials('doocker-hub-credential')
        DOCKER_IMAGE = 'ephraimaudu/test-app'
        GITHUB_CREDENTIALS = 'github'
-       SONAR_TOKEN = credentials('SONAR_TOKEN')
+       SONAR_TOKEN = credentials('sonartoken')
        SNAP_REPO = 'vprofile-snapshot'
        NEXUS_USER = 'admin'
        NEXUS_PASS = 'admin@123'
