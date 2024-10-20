@@ -10,6 +10,17 @@ pipeline {
        DOCKER_IMAGE = 'ephraimaudu/test-app'
        GITHUB_CREDENTIALS = 'github'
        SONAR_TOKEN = credentials('SONAR_TOKEN')
+       SNAP_REPO = 'vprofile-snapshot'
+       NEXUS_USER = 'admin'
+       NEXUS_PASS = 'admin@123'
+       RELEASE_REPO = 'vprofile-release'
+       CENTRAL_REPO = 'vpro-maven-central'
+       NEXUS_IP = '192.168.29.68'
+       NEXUS_PORT = '8081'
+       NEXUS_GRP_REPO = 'vpro-maven-group'
+       NEXUS_LOGIN = 'nexuslogin'
+       SONARSERVER = 'sonarserver'
+       SONARSCANNER = 'sonarscanner'
    }
 
 
