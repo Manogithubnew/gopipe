@@ -32,11 +32,21 @@ pipeline {
                credentialsId: "${GITHUB_CREDENTIALS}"
            }
        }
-       stage('Run SonarQube Analysis') {
-           steps {
-               script {
-                   echo 'starting analysis'
-                   sh '/usr/local/sonar/bin/sonar-scanner -X -Dsonar.organization=eph-test-app -Dsonar.projectKey=eph-test-app-test-go-app -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io'
+       stage ('Sonar Analysis') {
+            environment {
+                scannerHome = tool "${SONARSCANNER}" 
+            }
+            steps {
+              withSonarQubeEnv("${SONARSERVER}") {
+                 sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                     -Dsonar.projectName=vprofile-repo \
+                     -Dsonar.projectVersion=1.0 \
+                     -Dsonar.sources=/var/lib/jenkins/workspace/mrt-ci-pipeline-java/ \
+                     -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                     -Dsonar.exclusions=**/*.js,**/*.ts,**/*.css,**/*.jps \
+                     -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                     -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                     -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
                }
            }
        }
@@ -53,7 +63,7 @@ pipeline {
            steps{
                echo "pushing to docker hub"
                script{
-                   docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+                   docker.withRegistry('https://registry.hub.docker.com', 'doocker-hub-credential'){
                        docker.image("${DOCKER_IMAGE}:${env.BUILD_ID}").push()
                    }
                }
