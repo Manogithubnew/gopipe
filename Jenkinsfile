@@ -6,9 +6,9 @@ pipeline {
       go '1.23.2'
    }
    environment {
-       DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+       DOCKERHUB_CREDENTIALS = credentials('doocker-hub-credential')
        DOCKER_IMAGE = 'ephraimaudu/test-app'
-       GITHUB_CREDENTIALS = 'git-secret'
+       GITHUB_CREDENTIALS = 'github'
        SONAR_TOKEN = credentials('SONAR_TOKEN')
    }
 
@@ -17,7 +17,7 @@ pipeline {
        stage('Checkout'){
            steps{
                echo "checking out repo"
-               git url: 'https://github.com/audu97/test-project', branch: 'master',
+               git url: 'https://github.com/Manogithubnew/gopipe.git', branch: 'main',
                credentialsId: "${GITHUB_CREDENTIALS}"
            }
        }
